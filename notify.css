@@ -9,6 +9,9 @@ for UI of notification toasts. Released under MIT.
 
 #notify_js_root {
     font-family: Nato;
+    *{
+        all: unset;
+    }
     .toast{
         /* width: 300px; */
         position:relative;
