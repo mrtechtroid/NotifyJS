@@ -225,6 +225,8 @@ for UI of notification toasts. Released under MIT.
         text-align: center;
         height: 40%;
         top: 47%;
+        display: flex;
+        flex-direction: column;
     }
 
     .button-box {
