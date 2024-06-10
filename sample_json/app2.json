@@ -1,0 +1,9 @@
+{
+    "notify_version":1,
+    "websites":[
+        {"type":"hostname","identifier":"localhost","displayTime":{"from":"0","to":"-1"},"notif_type":"success","notif_title":"Q","notif_text":"","max_shown_time":5000},
+        {"type":"url","identifier":"localhost:5500/test.html","displayTime":{"from":"0","to":"-1"},"notif_type":"error","notif_title":"S ","notif_text":"","max_shown_time":1000}
+    ],
+    "linked_json_set":[
+    ]
+}

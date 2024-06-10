@@ -1,0 +1,10 @@
+{
+    "notify_version":1,
+    "websites":[
+        {"type":"hostname","identifier":"localhost","displayTime":{"from":"0","to":"-1"},"notif_type":"success","notif_text":"Just a test","notif_title":"test","notif_title":"Q","max_shown_time":5000},
+        {"type":"url","identifier":"localhost:5500/test.html","displayTime":{"from":"0","to":"-1"},"notif_type":"error","notif_text":"Submissions have been disabled temporarily. ","notif_title":"test","max_shown_time":1000}
+    ],
+    "linked_json_set":[
+        "sample_json/app2.json"
+    ]
+}
