@@ -7,7 +7,7 @@ for UI of notification toasts. Released under MIT.
 */
 
 let DATA_SOURCE = ""
-let NOTIFY_SCRIPT_VERSION = 101  // 1.0.1
+let NOTIFY_SCRIPT_VERSION = 102  // 1.0.2
 DATA_SOURCE = document.querySelector("script[_notify_js_]").getAttribute("data_source")
 
 function createNotifyJSRoot(){
@@ -42,7 +42,14 @@ function parseNotifications(json){
     document.head.appendChild(notify_new_script);
     return false;
   }
-  createNotifyJSRoot()
+  if (document.getElementById("notify_js_root")==null){
+    createNotifyJSRoot();
+    if (json.default_style){
+      document.getElementById("notify_js_root").setAttribute("class",`notifyjs-style-${json.default_style}`)
+    }else{
+      document.getElementById("notify_js_root").setAttribute("class",`notifyjs-style-1`)
+    }
+  }
   for (let i = 0;i<json.websites.length;i++){
     let webCheck = json.websites[i];
     if (webCheck.type=="hostname"){

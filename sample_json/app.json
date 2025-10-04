@@ -2,8 +2,9 @@
     "notify_version":1,
     "min_script_version":101,
     "min_notify_sha":"449439c2d67e432e5843f83e57f206de4f760822",
+    "default_style": "2",
     "websites":[
-        {"type":"hostname","identifier":"localhost","displayTime":{"from":"0","to":"-1"},"notif_type":"success","notif_text":"Just a test","notif_title":"test","notif_title":"Q","max_shown_time":5000},
+        {"type":"hostname","identifier":"localhost","displayTime":{"from":"0","to":"-1"},"notif_type":"success","notif_text":"Just a test","notif_title":"test","notif_title":"Q","max_shown_time":50000, "style":"1"},
         {"type":"url","identifier":"localhost:5173/test.html","displayTime":{"from":"0","to":"-1"},"notif_type":"error","notif_text":"Submissions have been disabled temporarily. ","notif_title":"test","max_shown_time":1000}
     ],
     "linked_json_set":[
