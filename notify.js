@@ -7,7 +7,7 @@ for UI of notification toasts. Released under MIT.
 */
 
 let DATA_SOURCE = ""
-let NOTIFY_SCRIPT_VERSION = 102  // 1.0.2
+let NOTIFY_SCRIPT_VERSION = 103  // 1.0.3
 DATA_SOURCE = document.querySelector("script[_notify_js_]").getAttribute("data_source")
 
 function createNotifyJSRoot(){
@@ -36,10 +36,13 @@ function parseNotifications(json){
     return false;
   }
   if (json.min_script_version > NOTIFY_SCRIPT_VERSION){
-    // using JSDelivr CDN.
-    var notify_new_script = document.createElement('script');
-    notify_new_script.setAttribute('src',`https://cdn.jsdelivr.net/gh/mrtechtroid/NotifyJS@${json.min_notify_sha}/notify.js`);
-    document.head.appendChild(notify_new_script);
+    if (json.cdn_url && json.cdn_url != ""){
+      var notify_new_script = document.createElement('script');
+      notify_new_script.setAttribute('src',`${json.cdn_url}@${json.min_notify_sha}/notify.js`);
+      document.head.appendChild(notify_new_script);
+    }else{
+      console.log("[NOTIFYJS] cdn_url not found. terminating.")
+    }
     return false;
   }
   if (document.getElementById("notify_js_root")==null){

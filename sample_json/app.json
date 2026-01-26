@@ -9,5 +9,6 @@
     ],
     "linked_json_set":[
         "sample_json/app2.json"
-    ]
+    ],
+    "cdn_url":"https://cdn.jsdelivr.net/gh/mrtechtroid/NotifyJS"
 }
