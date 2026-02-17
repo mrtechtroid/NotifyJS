@@ -7,7 +7,8 @@ for UI of notification toasts. Released under MIT.
 */
 
 let DATA_SOURCE = ""
-let NOTIFY_SCRIPT_VERSION = 103  // 1.0.3
+let NOTIFY_SCRIPT_VERSION = 104  // 1.0.4
+let NOTIFY_DATA = {}
 DATA_SOURCE = document.querySelector("script[_notify_js_]").getAttribute("data_source")
 
 function createNotifyJSRoot(){
@@ -97,19 +98,21 @@ function dE(ele){
 }
 
 function toastTimer(id, time) {
-  dE(id).setAttribute("timedone", 0)
-  dE(id).setAttribute("timestarted", Date.now())
-  dE(id).setAttribute("toastInterval", setInterval(function () {
+  if (NOTIFY_DATA[id] == undefined){
+    NOTIFY_DATA[id] = {}
+  }
+  NOTIFY_DATA[id].timedone = 0
+  NOTIFY_DATA[id].timestarted = Date.now()
+  NOTIFY_DATA[id].toastInterval = setInterval(function () {
     let timenow = Date.now()
-    dE(id).style.width = String(100 * (timenow - parseInt(dE(id).getAttribute("timestarted"))) / (time)) + "%"
-    dE(id).setAttribute("timedone", parseInt(dE(id).getAttribute("timedone")) + 1)
-    if (parseInt(dE(id).getAttribute("timedone")) * 10 === time) {
-      clearInterval(dE(id).getAttribute('toastInterval'));
+    dE(id).style.width = String(100 * (timenow - parseInt(NOTIFY_DATA[id].timestarted)) / (time)) + "%"
+    if (timenow - parseInt(NOTIFY_DATA[id].timestarted) >= time) {
+      clearInterval(NOTIFY_DATA[id].toastInterval);
       dE("toast" + id.split("toasttimer")[1]).remove()
     }
-  }, 10))
+  }, 10)
   dE(id).parentElement.onclick = function(){
-    clearInterval(dE(id).getAttribute('toastInterval'));
+    clearInterval(NOTIFY_DATA[id].toastInterval);
     dE("toast" + id.split("toasttimer")[1]).remove()
   }
 }
@@ -128,13 +131,13 @@ function addToast(webCheck) {
   }
   
   if (webCheck.notif_type == "success") {
-    namo = `<div class="success-box"><div class="dot"></div><div class="dot two"></div><div class="face"><div class="eye"></div><div class="eye right"></div><div class="mouth happy"></div></div><div class="message"><h1 class="alert">${webCheck.notif_title}</h1><p>${webCheck.notif_text}</p></div>${web_html_}<div class = "toasttimer" id = "toasttimer` + idno + `"></div><span class = "watermark">NotifyJS v1.0</span></div>`
+    namo = `<div class="success-box"><div class="dot"></div><div class="dot two"></div><div class="face"><div class="eye"></div><div class="eye right"></div><div class="mouth happy"></div></div><div class="message"><h1 class="alert">${webCheck.notif_title}</h1><p>${webCheck.notif_text}</p></div>${web_html_}<div class = "toasttimer" id = "toasttimer` + idno + `"></div><span class = "watermark">NotifyJS v`+parseInt(NOTIFY_SCRIPT_VERSION/100)+`.0.`+NOTIFY_SCRIPT_VERSION%10+`</span></div>`
   } else if (webCheck.notif_type == "warning") {
-    namo = `<div class="warning-box"><div class="dot"></div><div class="dot two"></div><div class="face2"><div class="eye"></div><div class="eye right"></div><div class="mouth bruh"></div></div><div class="message"><h1 class="alert">${webCheck.notif_title}</h1><p>${webCheck.notif_text}</p></div>${web_html_}<div class = "toasttimer" id = "toasttimer` + idno + `"></div><span class = "watermark">NotifyJS v1.0</span></div>`
+    namo = `<div class="warning-box"><div class="dot"></div><div class="dot two"></div><div class="face2"><div class="eye"></div><div class="eye right"></div><div class="mouth bruh"></div></div><div class="message"><h1 class="alert">${webCheck.notif_title}</h1><p>${webCheck.notif_text}</p></div>${web_html_}<div class = "toasttimer" id = "toasttimer` + idno + `"></div><span class = "watermark">NotifyJS v`+parseInt(NOTIFY_SCRIPT_VERSION/100)+`.0.`+NOTIFY_SCRIPT_VERSION%10+`</span></div>`
   } else if (webCheck.notif_type == "error") {
-    namo = `<div class="error-box"><div class="dot"></div><div class="dot two"></div><div class="face2"><div class="eye"></div><div class="eye right"></div><div class="mouth sad"></div></div><div class="message"><h1 class="alert">${webCheck.notif_title}</h1><p>${webCheck.notif_text}</p></div>${web_html_}<div class = "toasttimer" id = "toasttimer` + idno + `"></div><span class = "watermark">NotifyJS v1.0</span></div>`
+    namo = `<div class="error-box"><div class="dot"></div><div class="dot two"></div><div class="face2"><div class="eye"></div><div class="eye right"></div><div class="mouth sad"></div></div><div class="message"><h1 class="alert">${webCheck.notif_title}</h1><p>${webCheck.notif_text}</p></div>${web_html_}<div class = "toasttimer" id = "toasttimer` + idno + `"></div><span class = "watermark">NotifyJS v`+parseInt(NOTIFY_SCRIPT_VERSION/100)+`.0.`+NOTIFY_SCRIPT_VERSION%10+`</span></div>`
   } else {
-    namo = `<div class="info-box"><div class="dot"></div><div class="dot two"></div><div class="face2"><div class="eye"></div><div class="eye right"></div><div class="mouth huh"></div></div><div class="message"><h1 class="alert">${webCheck.notif_title}</h1><p>${webCheck.notif_text}</p></div>${web_html_}<div class = "toasttimer" id = "toasttimer` + idno + `"></div><span class = "watermark">NotifyJS v1.0</span></div>`
+    namo = `<div class="info-box"><div class="dot"></div><div class="dot two"></div><div class="face2"><div class="eye"></div><div class="eye right"></div><div class="mouth huh"></div></div><div class="message"><h1 class="alert">${webCheck.notif_title}</h1><p>${webCheck.notif_text}</p></div>${web_html_}<div class = "toasttimer" id = "toasttimer` + idno + `"></div><span class = "watermark">NotifyJS v`+parseInt(NOTIFY_SCRIPT_VERSION/100)+`.0.`+NOTIFY_SCRIPT_VERSION%10+`</span></div>`
   }
   dE("notify_js_root").insertAdjacentHTML('afterbegin', `
   <li class = "toast" id = "toast`+ idno + `">${namo}</li>
